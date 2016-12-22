@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Christmas With Tommy</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--apple code-->
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="apple-touch-icon" href="assets/icon.png">
+        <link rel="apple-touch-icon-precomposed" href="assets/icon.png">
+        <!--android code-->
+        <meta name="mobile-web-app-capable" content="yes">
+        <link rel="shortcut icon" href="assets/icon.png">
+        <link href="app.css" rel="stylesheet">
+    </head>
+    <body>
+        <div id="container">
+            <header>
+                <div class="header-col-one">
+                    <h1 class="game-status-info">Level <span id="level"></span></h1>
+                    <h1 class="game-status-info">Points <span id="points"></span></h1>
+                    <h1 class="game-status-info">Time <span id="time"></span></h1>
+                </div>
+                <div class="header-col-two">
+                    <a id="audio-button"><span id="audio-icon"></span></a>
+                    <div id="lives">
+                        <img src="assets/life.png" width="70" height="60">
+                        <img src="assets/life.png" width="70" height="60">
+                        <img src="assets/life.png" width="70" height="60">
+                    </div>
+                </div> 
+            </header>
+            <div id="game-area">
+                <div id="leftSide"></div>
+                <div id="rightSide"></div>
+            </div>
+            <div id="snow"></div>
+        </div>
+        <script src="helpers.js"></script>
+        <script src="app.js"></script>
+    </body>
+</html>
