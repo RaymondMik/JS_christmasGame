@@ -18,6 +18,9 @@ h2 {
 h3 {
     font-size: 1.5em;
 }
+h3, h4, h5 {
+    font-family: 'Helvetica Neue', sans-serif;
+}
 img {
     position: absolute;
 }
@@ -187,7 +190,7 @@ img.item {
 }
 .modal-button {
     background-color: #3498db;
-    margin: 50px 10px 0 0;
+    margin: 20px 10px 0 0;
     width: 150px;
     height: 50px;
     color: white;

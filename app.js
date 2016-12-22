@@ -32,7 +32,7 @@ audioIcon.style.backgroundImage = 'url("assets/music_yes.png")';
 var display = document.querySelector('#time');
 level.innerHTML = currentLevel;
 points.innerHTML = currentPoints;
-time.innerHTML = this.options.totalTime;
+time.innerHTML = options.totalTime;
 
 // resources
 var audioWin = new Audio("assets/dog_barking.mp3");
@@ -44,32 +44,39 @@ var puppyTopPos = screen.width < 400 ? 125 : 500;
 var puppyLeftPos = screen.width < 400 ? 125 : 500;
 audioSigletta.loop = true;
 
+// firebase setup
+var dbRef = firebase.database().ref().child('record');
+var records = {};
+dbRef.on('value', function(snapshot) {
+  var bestLevel = snapshot.val().levels;
+  var bestPoints = snapshot.val().points;
+  records.bestLevel = bestLevel;
+  records.bestPoints = bestPoints;
+});
 
 generateFaces();
 var startTimer = setInterval(timer, 1000);
-//this.audioSigletta.play();
+this.audioSigletta.play();
 
 function timer() {
-    time.innerHTML = this.options.totalTime;
-    if (this.options.totalTime >= 0) {
-       this.options.totalTime -= 1; 
+    time.innerHTML = options.totalTime;
+    if (options.totalTime >= 0) {
+       options.totalTime -= 1; 
     } 
-    if (this.options.totalTime === -1) {
-        this.gameOver();
-        var message = '<h1>Game Over</h1><h3>Congratulations!<br>Level: ' + currentLevel + '<br> Points: ' + currentPoints + '</h3>';
-        self.triggerModal(message, true);
+    if (options.totalTime === -1) {
+        gameOver();
+        notifyPlayer(currentLevel, currentPoints, dbRef);
     }
 }
 
 // generate faces
 function generateFaces() {
     var self = this;
-   
-    for ( var i = 0; i < this.options.numberOfFaces; i++) {
+    for ( var i = 0; i < options.numberOfFaces; i++) {
+
         //generate, place and style puppy face
         var puppyFace = document.createElement('img');
         puppyFace.className = 'item';
-
         var randomPositionTop = Math.floor(Math.random() * puppyTopPos);
         var randomPositionLeft = Math.floor(Math.random() * puppyLeftPos);
         puppyFace.style.top = randomPositionTop + 'px';
@@ -77,13 +84,17 @@ function generateFaces() {
         puppyFace.style.width = puppyWidth + 'px';
         puppyFace.style.height = puppyHeight + 'px';
         puppyFace.src = 'assets/tommy.png';
+    
         //add images to the left side
         theLeftSide.appendChild(puppyFace);
+        
         //clone leftSide node
         var leftSideImages = theLeftSide.cloneNode(true);
         leftSideImages.id = "new-puppy-face";
+        
         //delete last child of LeftSideImages
         leftSideImages.removeChild(leftSideImages.lastChild);
+        
         //add leftSideImages to the rightSide div
         theRightSide.appendChild(leftSideImages);
     }
@@ -92,7 +103,7 @@ function generateFaces() {
     theLeftSide.lastChild.onclick = function nextLevel(event) {
         event.stopPropagation();
         audioWin.play();
-
+        
         //remove images
         while (theLeftSide.firstChild && theRightSide.firstChild) {
             theLeftSide.removeChild(theLeftSide.firstChild);
@@ -102,9 +113,10 @@ function generateFaces() {
         levelCount++;
         currentPoints += self.options.guessPoints;
         points.innerHTML = currentPoints;
-
+        
         //generate a new set of Faces
         generateFaces();
+        
         //if three guesses go to next level
         if (levelCount % 3 == 0) {
             currentLevel += 1;
@@ -120,17 +132,17 @@ function generateFaces() {
 theBody.onclick = function() {
     count++;
     if (count < 3) {
-        var puppy = lives.getElementsByTagName('img');
-        lives.removeChild(puppy[0]);
+        var puppyLife = lives.getElementsByTagName('img');
+        lives.removeChild(puppyLife[0]);
         audioLoose.play();
         if (currentPoints > 100) {
-            currentPoints -= this.options.losePoints;
+            currentPoints -= options.losePoints;
+            points.innerHTML = currentPoints;
         }
     }
     if (count === 3) {
-        self.gameOver();
-        var message = '<h1>Game Over</h1><h3>Congratulations!<br>Level: ' + currentLevel + '<br> Points: ' + currentPoints + '</h3>';
-        self.triggerModal(message, true);
+        gameOver();
+        notifyPlayer(currentLevel, currentPoints, dbRef);
     }
 }
 
@@ -143,6 +155,7 @@ audioButton.onclick = function() {
         audioIcon.style.backgroundImage = 'url("assets/music_no.png")';
     }
 }
+
 
 
 
