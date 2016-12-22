@@ -13,7 +13,10 @@ h1, h2 {
     color: #FFF;
 }
 h2 {
-    font-size: 1.2em;
+    font-size: 1.4em;
+}
+h3 {
+    font-size: 1.5em;
 }
 img {
     position: absolute;
@@ -105,6 +108,8 @@ h1.game-status-info {
 }
 #lives > img {
     position: relative;
+    height: 60px;
+    width: 70px;
     z-index: 100;
 }
 #game-area {
@@ -115,13 +120,13 @@ h1.game-status-info {
     z-index: 50;
 }
 #leftSide {
-    height: 48%;  
+    height: 100%;  
     width: 48%;
     z-index: 50;
 }
 #new-puppy-face {
     position: absolute;
-    top: 12%;
+    top: 12vh;
     left: 0;
 }
 #rightSide {
@@ -134,7 +139,7 @@ h1.game-status-info {
     margin-left: 48%;
 }
 img.item {
-    z-index: 100;
+    z-index: 200;
     -webkit-animation: floatingDogs 2.5s linear infinite;
     -moz-animation: floatingDogs 2.5s linear infinite;
     -ms-animation: floatingDogs 2.5s linear infinite;
@@ -196,5 +201,57 @@ img.item {
         left: 12.5%;
         width: 75%;
         height: 220px;
+    }
+}
+@media screen and (max-width: 700px) {
+    header {
+        height: 20vh;
+        flex-direction: column;
+    }
+    .header-col-one {
+        width: 100%;
+        padding: 0 5px;
+    }
+    .header-col-two {
+        width: 100%;
+        padding: 0 5px;
+    }
+    h1.game-status-info {
+        width: 33%;
+        font-size: 0.7em;
+    }
+    #audio-button {
+        height: 30px;
+        width: 30px;
+        float: left;
+        margin-right: 50px;
+    }
+    #lives {
+        float: left;
+    }
+    #lives > img {
+        height: 27px;
+        width: 30px;
+    }
+    #leftSide {
+        margin-top: 10vh;
+    }
+   #new-puppy-face {
+        position: absolute;
+        top: 30vh;
+    }
+    #game-area {
+        height: 80vh;
+    }
+    #rightSide {
+        border-left: 5px dotted #FFF;
+    }
+    #modal-body {
+        left: 12.5%;
+        width: 75%;
+        height: 350px;
+    }
+    .modal-button {
+        margin: 10px 10px 0 0;
     }
 }
