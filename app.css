@@ -252,7 +252,16 @@ img.item {
     #modal-body {
         left: 12.5%;
         width: 75%;
-        height: 350px;
+        height: 300px;
+    }
+    #modal-body > h1 {
+        font-size: 1.2em;
+    }
+    #modal-body > h2 {
+        font-size: 1em;
+    }
+    #modal-body > h3 {
+        font-size: 0.8em;
     }
     .modal-button {
         margin: 10px 10px 0 0;

@@ -40,19 +40,9 @@ var audioLoose = new Audio("assets/dog_crying.mp3");
 var audioSigletta = new Audio("assets/jingle_bells.mp3");
 var puppyWidth = screen.width < 400 ? 50 : 100;
 var puppyHeight = screen.width < 400 ? 50 : 100;
-var puppyTopPos = screen.width < 400 ? 125 : 500;
+var puppyTopPos = screen.width < 400 ? 200 : 500;
 var puppyLeftPos = screen.width < 400 ? 125 : 500;
 audioSigletta.loop = true;
-
-// firebase setup
-var dbRef = firebase.database().ref().child('record');
-var records = {};
-dbRef.on('value', function(snapshot) {
-  var bestLevel = snapshot.val().levels;
-  var bestPoints = snapshot.val().points;
-  records.bestLevel = bestLevel;
-  records.bestPoints = bestPoints;
-});
 
 generateFaces();
 var startTimer = setInterval(timer, 1000);
@@ -65,7 +55,7 @@ function timer() {
     } 
     if (options.totalTime === -1) {
         gameOver();
-        notifyPlayer(currentLevel, currentPoints, dbRef);
+        notifyPlayer(currentLevel, currentPoints);
     }
 }
 
@@ -142,7 +132,7 @@ theBody.onclick = function() {
     }
     if (count === 3) {
         gameOver();
-        notifyPlayer(currentLevel, currentPoints, dbRef);
+        notifyPlayer(currentLevel, currentPoints);
     }
 }
 
