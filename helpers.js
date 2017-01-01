@@ -19,13 +19,15 @@ function triggerModal(message, playAgain) {
 }
 
 // notify player depending on points scored and level reached
-function notifyPlayer(currentLevel, currentPoints, dbRef) {
+function notifyPlayer(currentLevel, currentPoints) {
     var message = '<h1>Game Over</h1>';
-    var localStoragePoints = localStorage.getItem('pointsRecord');
-    var localStorageLevels = localStorage.getItem('levelsRecord');
+    var localStoragePoints = localStorage.getItem('pointsRecord') === null ? 0 : localStorage.getItem('pointsRecord');
+    var localStorageLevels = localStorage.getItem('levelsRecord') === null ? 0 : localStorage.getItem('levelsRecord');
+    console.log(localStoragePoints);
+    console.log(currentPoints);
 
-    if (currentPoints > localStoragePoints || localStoragePoints !== null) {
-        var pointsDiff = localStoragePoints !== null ? currentPoints - localStoragePoints : currentPoints;
+    if (currentPoints > localStoragePoints) {
+        var pointsDiff = currentPoints - localStoragePoints;
         message += '<h2>Wow ' + currentPoints + ' points, new record!</h2><h3>You scored ' + pointsDiff + ' more than the previous record.</h3>'
         if (currentLevel > localStorageLevels) {
             message += '<h3>You also set a new record by reaching level ' + currentLevel + '.</h3>'
@@ -33,7 +35,8 @@ function notifyPlayer(currentLevel, currentPoints, dbRef) {
             localStorage.setItem('levelsRecord', currentLevel);
         }
     } else {
-        message += '<h3>Congratulations!</h3><h3>Points: ' + currentPoints + '</h3><h3>Level: ' + currentLevel + '</h3>';
+        pointsDiff =  localStoragePoints - currentPoints;
+        message += '<h3>Points: ' + currentPoints + '</h3><h3>Level: ' + currentLevel + '</h3><h3><h3>You scored ' + pointsDiff + ' less than your previous record.</h3>';
     }
     triggerModal(message, true);
 }
